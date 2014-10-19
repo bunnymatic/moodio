@@ -12,7 +12,7 @@ $(function() {
   var scene = new FSS.Scene();
 
   // 4) Create some Geometry & a Material, pass them to a Mesh constructor, and add the Mesh to the Scene:
-  var geometry = new FSS.Plane(600, 400, 16, 14);
+  var geometry = new FSS.Plane(400,400, 20, 30);
   var material = new FSS.Material('#444444', '#FFFFFF');
   var light = new FSS.Light('#111122', '#FF0022');
   var mesh = new FSS.Mesh(geometry, material);
@@ -20,8 +20,7 @@ $(function() {
 
   function animate() {
     now = Date.now() - start;
-    geometry.segments = 4 + (now % 10)
-    geometry.height = 4 + (now % 9)
+
     light.setPosition(300*Math.sin(now*0.001), 200*Math.cos(now*0.0005), 60);
     renderer.render(scene);
     requestAnimationFrame(animate);
