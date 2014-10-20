@@ -1,19 +1,22 @@
 class Color
 
+  GOLDEN_RATIO_CONJUGATE = 0.618033988749895
+  
+  restrictWithin = (val, min, max) ->
+    val == min if val < min
+    val == max if val > max
+    val
+    
   validateColor = (color) ->
-    color == 0 if color < 0
-    color == 255 if color > 255
-    parseInt(color,10)
-    
-  constructor: (r,g,b,a) ->
-    @red = validateColor(r)
-    @green = validateColor(g)
-    @blue =  validateColor(b)
-    @alpha = validateAlpha(a)
-    
-  # HSV values in [0..1[
-  # returns [r, g, b] values from 0 to 255
-  hsv_to_rgb: (h, s, v) ->
+    parseInt(restrictWithin(color, 0, 255), 10)
+
+  validateAlpha = (alpha) -> 
+    restrictWithin(alpha, 0.0, 1.0)
+
+  hsv_to_rgb: ->
+    h = @hue
+    s = @saturation
+    v = @value
     h_i = parseInt(h*6, 10)
     f = h*6 - h_i
     p = v * (1 - s)
@@ -25,4 +28,16 @@ class Color
     [r, g, b] = [p, q, v] if h_i==3
     [r, g, b] = [t, p, v] if h_i==4
     [r, g, b] = [v, p, q] if h_i==5
-    _.map [r*256, g*256, b*256], (val) -> parseInt(val, 10)
+    [@red, @green, @blue] = [r*256, g*256, b*256]        
+
+  constructor: (h,s,v) ->
+    [@hue, @saturation, @value] = [h,s,v]
+    @hsv_to_rgb()
+
+  # HSV values in [0..1[
+  # returns [r, g, b] values from 0 to 255
+  decimal_rgb:->
+    _.map [@red, @green, @blue], (val) -> parseInt(val, 10)
+
+  hex_rgb: ->
+    '#' + _.map(@decimal_rgb(), (val) -> val.toString(16)).join ''

@@ -1,7 +1,7 @@
 $ -> 
 
   now = null
-  
+
   MESH = 
     xRange: 0.2
     yRange: 0.2
@@ -68,9 +68,10 @@ $ ->
 
   addLights = ->
     oldLights = scene.lights
+    spectrum = new Spectrum
     _.times numLights, ->
-      ambient = ["#112222"][parseInt(now, 10) % 1]
-      diffuse = ["#ffccff"][parseInt(now, 10) % 1]
+      ambient = spectrum.sample(now)
+      diffuse = spectrum.sample(now+1)
       light = new FSS.Light(ambient, diffuse)
       scene.add light
       newPosition = [
@@ -86,11 +87,12 @@ $ ->
   adjustVertices = ->
     offset = MESH.depth / 2
     v = geometry.vertices.length - 1
+    offset = new Temperature
     while v >= 0
       vertex = geometry.vertices[v]
-      ox = Math.sin(vertex.time + Math.randomInRange(0,0.5) * now * speed())
-      oy = Math.cos(vertex.time + Math.randomInRange(0,0.5) * now * speed())
-      oz = Math.sin(vertex.time + Math.randomInRange(0,0.5) * now * speed())
+      ox = offset.sample()
+      oy = offset.sample()
+      oz = offset.sample()
       FSS.Vector3.set(
         vertex.position,
         MESH.xRange * geometry.segmentWidth * ox,

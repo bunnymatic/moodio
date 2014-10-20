@@ -54,12 +54,13 @@ $(function() {
     });
   };
   addLights = function() {
-    var oldLights;
+    var oldLights, spectrum;
     oldLights = scene.lights;
+    spectrum = new Spectrum;
     _.times(numLights, function() {
       var ambient, diffuse, light, newPosition;
-      ambient = ["#112222"][parseInt(now, 10) % 1];
-      diffuse = ["#ffccff"][parseInt(now, 10) % 1];
+      ambient = spectrum.sample(now);
+      diffuse = spectrum.sample(now + 1);
       light = new FSS.Light(ambient, diffuse);
       scene.add(light);
       newPosition = [MESH.width * Math.sin(now * speed()) / 6.0, MESH.height * Math.cos(now * speed()) / 6.0, MESH.depth * 2.0];
@@ -71,11 +72,12 @@ $(function() {
     var offset, ox, oy, oz, v, vertex;
     offset = MESH.depth / 2;
     v = geometry.vertices.length - 1;
+    offset = new Temperature;
     while (v >= 0) {
       vertex = geometry.vertices[v];
-      ox = Math.sin(vertex.time + Math.randomInRange(0, 0.5) * now * speed());
-      oy = Math.cos(vertex.time + Math.randomInRange(0, 0.5) * now * speed());
-      oz = Math.sin(vertex.time + Math.randomInRange(0, 0.5) * now * speed());
+      ox = offset.sample();
+      oy = offset.sample();
+      oz = offset.sample();
       FSS.Vector3.set(vertex.position, MESH.xRange * geometry.segmentWidth * ox, MESH.yRange * geometry.sliceHeight * oy, MESH.zRange * offset * oz - offset);
       FSS.Vector3.add(vertex.position, vertex.anchor);
       v--;

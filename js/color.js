@@ -1,27 +1,33 @@
 var Color;
 
 Color = (function() {
-  var validateColor;
+  var GOLDEN_RATIO_CONJUGATE, restrictWithin, validateAlpha, validateColor;
 
-  validateColor = function(color) {
-    if (color < 0) {
-      color === 0;
+  GOLDEN_RATIO_CONJUGATE = 0.618033988749895;
+
+  restrictWithin = function(val, min, max) {
+    if (val < min) {
+      val === min;
     }
-    if (color > 255) {
-      color === 255;
+    if (val > max) {
+      val === max;
     }
-    return parseInt(color, 10);
+    return val;
   };
 
-  function Color(r, g, b, a) {
-    this.red = validateColor(r);
-    this.green = validateColor(g);
-    this.blue = validateColor(b);
-    this.alpha = validateAlpha(a);
-  }
+  validateColor = function(color) {
+    return parseInt(restrictWithin(color, 0, 255), 10);
+  };
 
-  Color.prototype.hsv_to_rgb = function(h, s, v) {
-    var b, f, g, h_i, p, q, r, t, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
+  validateAlpha = function(alpha) {
+    return restrictWithin(alpha, 0.0, 1.0);
+  };
+
+  Color.prototype.hsv_to_rgb = function() {
+    var b, f, g, h, h_i, p, q, r, s, t, v, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
+    h = this.hue;
+    s = this.saturation;
+    v = this.value;
     h_i = parseInt(h * 6, 10);
     f = h * 6 - h_i;
     p = v * (1 - s);
@@ -45,9 +51,25 @@ Color = (function() {
     if (h_i === 5) {
       _ref5 = [v, p, q], r = _ref5[0], g = _ref5[1], b = _ref5[2];
     }
-    return _.map([r * 256, g * 256, b * 256], function(val) {
+    return _ref6 = [r * 256, g * 256, b * 256], this.red = _ref6[0], this.green = _ref6[1], this.blue = _ref6[2], _ref6;
+  };
+
+  function Color(h, s, v) {
+    var _ref;
+    _ref = [h, s, v], this.hue = _ref[0], this.saturation = _ref[1], this.value = _ref[2];
+    this.hsv_to_rgb();
+  }
+
+  Color.prototype.decimal_rgb = function() {
+    return _.map([this.red, this.green, this.blue], function(val) {
       return parseInt(val, 10);
     });
+  };
+
+  Color.prototype.hex_rgb = function() {
+    return '#' + _.map(this.decimal_rgb(), function(val) {
+      return val.toString(16);
+    }).join('');
   };
 
   return Color;
