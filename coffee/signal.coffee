@@ -12,7 +12,7 @@ class Temperature extends Signal
     else
       Math.sin(x * Math.PI / 380.0)
     
-class VertexOffset
+class VertexOffset extends Signal
 
   fn: -> Math.randomInRange(0, 0.5)
 

@@ -57,22 +57,21 @@ $(function() {
     var oldLights, spectrum;
     oldLights = scene.lights;
     spectrum = new Spectrum;
-    _.times(numLights, function() {
+    return _.times(numLights, function() {
       var ambient, diffuse, light, newPosition;
       ambient = spectrum.sample(now);
       diffuse = spectrum.sample(now + 1);
       light = new FSS.Light(ambient, diffuse);
       scene.add(light);
       newPosition = [MESH.width * Math.sin(now * speed()) / 6.0, MESH.height * Math.cos(now * speed()) / 6.0, MESH.depth * 2.0];
-      light.setPosition.apply(light, newPosition);
+      return light.setPosition.apply(light, newPosition);
     });
-    return oldLights;
   };
   adjustVertices = function() {
     var offset, ox, oy, oz, v, vertex;
     offset = MESH.depth / 2;
     v = geometry.vertices.length - 1;
-    offset = new Temperature;
+    offset = new VertexOffset;
     while (v >= 0) {
       vertex = geometry.vertices[v];
       ox = offset.sample();

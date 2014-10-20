@@ -35,8 +35,12 @@ Temperature = (function(_super) {
 
 })(Signal);
 
-VertexOffset = (function() {
-  function VertexOffset() {}
+VertexOffset = (function(_super) {
+  __extends(VertexOffset, _super);
+
+  function VertexOffset() {
+    return VertexOffset.__super__.constructor.apply(this, arguments);
+  }
 
   VertexOffset.prototype.fn = function() {
     return Math.randomInRange(0, 0.5);
@@ -44,7 +48,7 @@ VertexOffset = (function() {
 
   return VertexOffset;
 
-})();
+})(Signal);
 
 Spectrum = (function(_super) {
   __extends(Spectrum, _super);

@@ -80,14 +80,11 @@ $ ->
         MESH.depth * 2.0
       ]
       light.setPosition.apply(light,newPosition)
-      return
-
-    oldLights
 
   adjustVertices = ->
     offset = MESH.depth / 2
     v = geometry.vertices.length - 1
-    offset = new Temperature
+    offset = new VertexOffset
     while v >= 0
       vertex = geometry.vertices[v]
       ox = offset.sample()
