@@ -62,7 +62,7 @@ $(function() {
       diffuse = ["#ffccff"][parseInt(now, 10) % 1];
       light = new FSS.Light(ambient, diffuse);
       scene.add(light);
-      newPosition = [MESH.width * Math.sin(now * speed()) / 4.0, MESH.height * Math.cos(now * speed()) / 4.0, MESH.depth * 2.0];
+      newPosition = [MESH.width * Math.sin(now * speed()) / 6.0, MESH.height * Math.cos(now * speed()) / 6.0, MESH.depth * 2.0];
       light.setPosition.apply(light, newPosition);
     });
     return oldLights;
@@ -73,9 +73,9 @@ $(function() {
     v = geometry.vertices.length - 1;
     while (v >= 0) {
       vertex = geometry.vertices[v];
-      ox = Math.sin(vertex.time + vertex.step[0] * now * speed());
-      oy = Math.cos(vertex.time + vertex.step[1] * now * speed());
-      oz = Math.sin(vertex.time + vertex.step[2] * now * speed());
+      ox = Math.sin(vertex.time + Math.randomInRange(0, 0.5) * now * speed());
+      oy = Math.cos(vertex.time + Math.randomInRange(0, 0.5) * now * speed());
+      oz = Math.sin(vertex.time + Math.randomInRange(0, 0.5) * now * speed());
       FSS.Vector3.set(vertex.position, MESH.xRange * geometry.segmentWidth * ox, MESH.yRange * geometry.sliceHeight * oy, MESH.zRange * offset * oz - offset);
       FSS.Vector3.add(vertex.position, vertex.anchor);
       v--;

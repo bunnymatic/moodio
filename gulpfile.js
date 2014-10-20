@@ -10,7 +10,7 @@ gulp.task('coffee', function() {
 });
 
 // task
-gulp.task('watch-coffeescript', function () {
+gulp.task('watch-coffee', function () {
     watch('./coffee/*.coffee', function (files) { // watch any changes on coffee files
         gulp.start('coffee'); // run the compile task
     });
