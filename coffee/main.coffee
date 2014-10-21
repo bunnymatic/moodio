@@ -69,14 +69,15 @@ $ ->
   addLights = ->
     oldLights = scene.lights
     spectrum = new Spectrum
+    lightPosition = new LightPosition
     _.times numLights, ->
       ambient = spectrum.sample(now)
       diffuse = spectrum.sample(now+1)
       light = new FSS.Light(ambient, diffuse)
       scene.add light
       newPosition = [
-        MESH.width * Math.sin(now * speed()) / 6.0,
-        MESH.height * Math.cos(now * speed()) / 6.0,
+        MESH.width * lightPosition.sample(now) / 6.0,
+        MESH.height * lightPosition.sample(now + 500000) / 6.0,
         MESH.depth * 2.0
       ]
       light.setPosition.apply(light,newPosition)

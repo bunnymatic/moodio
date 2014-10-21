@@ -25,3 +25,9 @@ class Spectrum extends Signal
     v = 0.95
     new Color(h,s,v).hex_rgb()
       
+class LightPosition extends Signal
+
+  fn: (t) ->
+    x = (t / 1000) % 2000 * Math.PI / 5.0
+    Math.cos(x)
+

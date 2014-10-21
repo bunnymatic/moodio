@@ -1,4 +1,4 @@
-var Signal, Spectrum, Temperature, VertexOffset,
+var LightPosition, Signal, Spectrum, Temperature, VertexOffset,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -67,5 +67,22 @@ Spectrum = (function(_super) {
   };
 
   return Spectrum;
+
+})(Signal);
+
+LightPosition = (function(_super) {
+  __extends(LightPosition, _super);
+
+  function LightPosition() {
+    return LightPosition.__super__.constructor.apply(this, arguments);
+  }
+
+  LightPosition.prototype.fn = function(t) {
+    var x;
+    x = (t / 1000) % 2000 * Math.PI / 5.0;
+    return Math.cos(x);
+  };
+
+  return LightPosition;
 
 })(Signal);
