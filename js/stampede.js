@@ -31,7 +31,7 @@ function init() {
     // SCENE CAMERA
 
     camera = new THREE.PerspectiveCamera( 23, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR, FAR );
-    camera.position.set( 700, 150, 1900 );
+    camera.position.set( 700, 200, 1900 );
 
     controls = new THREE.FirstPersonControls( camera );
 
@@ -164,57 +164,57 @@ function createScene( ) {
 
     // TEXT
 
-    var textGeo = new THREE.TextGeometry( "CODEO", {
+    // var textGeo = new THREE.TextGeometry( "CODEO", {
 
-        size: 200,
-        height: 50,
-        curveSegments: 12,
+    //     size: 200,
+    //     height: 50,
+    //     curveSegments: 12,
 
-        font: "gentilis",
-        weight: "bold",
-        style: "normal",
+    //     font: "gentilis",
+    //     weight: "bold",
+    //     style: "normal",
 
-        bevelThickness: 0,
-        bevelSize: 0,
-        bevelEnabled: true
+    //     bevelThickness: 0,
+    //     bevelSize: 0,
+    //     bevelEnabled: true
 
-    });
+    // });
 
-    textGeo.computeBoundingBox();
-    var centerOffset = -0.5 * ( textGeo.boundingBox.max.x - textGeo.boundingBox.min.x );
+    // textGeo.computeBoundingBox();
+    // var centerOffset = -0.5 * ( textGeo.boundingBox.max.x - textGeo.boundingBox.min.x );
 
-    var textMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x111111, ambient: 0x333333 } );
+    // var textMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x111111, ambient: 0x333333 } );
 
-    var mesh = new THREE.Mesh( textGeo, textMaterial );
-    mesh.position.x = centerOffset;
-    mesh.position.y = FLOOR + 80;
+    // var mesh = new THREE.Mesh( textGeo, textMaterial );
+    // mesh.position.x = centerOffset;
+    // mesh.position.y = FLOOR + 80;
 
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
+    // mesh.castShadow = true;
+    // mesh.receiveShadow = true;
 
-    scene.add( mesh );
+    // scene.add( mesh );
 
     // CUBES
 
-    var mesh2 = new THREE.Mesh( new THREE.BoxGeometry( 1500, 220, 150 ), planeMaterial );
+    // var mesh2 = new THREE.Mesh( new THREE.BoxGeometry( 1500, 220, 150 ), planeMaterial );
 
-    mesh2.position.y = FLOOR - 50;
-    mesh2.position.z = 20;
+    // mesh2.position.y = FLOOR - 50;
+    // mesh2.position.z = 20;
 
-    mesh2.castShadow = true;
-    mesh2.receiveShadow = true;
+    // mesh2.castShadow = true;
+    // mesh2.receiveShadow = true;
 
-    scene.add( mesh2 );
+    // scene.add( mesh2 );
 
-    var mesh3 = new THREE.Mesh( new THREE.BoxGeometry( 1600, 170, 250 ), planeMaterial );
+    // var mesh3 = new THREE.Mesh( new THREE.BoxGeometry( 1600, 170, 250 ), planeMaterial );
 
-    mesh3.position.y = FLOOR - 50;
-    mesh3.position.z = 20;
+    // mesh3.position.y = FLOOR - 50;
+    // mesh3.position.z = 20;
 
-    mesh3.castShadow = true;
-    mesh3.receiveShadow = true;
+    // mesh3.castShadow = true;
+    // mesh3.receiveShadow = true;
 
-    scene.add( mesh3 );
+    // scene.add( mesh3 );
 
     // MORPHS
 
@@ -269,14 +269,39 @@ function createScene( ) {
 
     var loader = new THREE.JSONLoader();
 
+    zoo = {};
+
     loader.load( "models/animated/horse.js", function( geometry ) {
         morphColorsToFaceColors( geometry );
-        window.horse = geometry;
+        zoo.horse = geometry;
+    } );
+
+    loader.load( "models/animated/flamingo.js", function( geometry ) {
+        morphColorsToFaceColors( geometry );
+        zoo.flamingo = geometry;
+    } );
+
+    loader.load( "models/animated/stork.js", function( geometry ) {
+        morphColorsToFaceColors( geometry );
+        zoo.stork = geometry;
     } );
 
     window.addHorse = function(){
         var i = (Math.random() * 600) + 200;
-        addMorph( horse, 550, 1000, -1000, FLOOR, i, true );
+        addMorph( zoo.horse, 550, 1000, -1000, FLOOR, i, true );
+    };
+
+    window.addFlamingo = function(){
+        addBird(zoo.flamingo);
+    };
+
+    window.addStork = function(){
+        addBird(zoo.stork);
+    };
+
+    window.addBird = function(bird){
+        var i = (Math.random() * 600) + 200;
+        addMorph( bird, 550, 1000, -1000, FLOOR + Math.random() * 400 + 100, i, true );
     };
 
     /*
