@@ -8,5 +8,8 @@
     "gulp-util":"",
     "gulp-coffee": ">= 2.2.0",
     "gulp-watch": ""
-  }	
+  },
+  "scripts": {
+    "start": "python -m SimpleHTTPServer"
+  }
 }
