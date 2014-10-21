@@ -196,25 +196,25 @@ function createScene( ) {
 
     // CUBES
 
-    var mesh = new THREE.Mesh( new THREE.BoxGeometry( 1500, 220, 150 ), planeMaterial );
+    var mesh2 = new THREE.Mesh( new THREE.BoxGeometry( 1500, 220, 150 ), planeMaterial );
 
-    mesh.position.y = FLOOR - 50;
-    mesh.position.z = 20;
+    mesh2.position.y = FLOOR - 50;
+    mesh2.position.z = 20;
 
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
+    mesh2.castShadow = true;
+    mesh2.receiveShadow = true;
 
-    scene.add( mesh );
+    scene.add( mesh2 );
 
-    var mesh = new THREE.Mesh( new THREE.BoxGeometry( 1600, 170, 250 ), planeMaterial );
+    var mesh3 = new THREE.Mesh( new THREE.BoxGeometry( 1600, 170, 250 ), planeMaterial );
 
-    mesh.position.y = FLOOR - 50;
-    mesh.position.z = 20;
+    mesh3.position.y = FLOOR - 50;
+    mesh3.position.z = 20;
 
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
+    mesh3.castShadow = true;
+    mesh3.receiveShadow = true;
 
-    scene.add( mesh );
+    scene.add( mesh3 );
 
     // MORPHS
 
@@ -224,7 +224,7 @@ function createScene( ) {
 
         if ( fudgeColor ) {
 
-            material.color.offsetHSL( 0, Math.random() * 0.5 - 0.25, Math.random() * 0.5 - 0.25 );
+            material.color.offsetHSL( Math.random(), Math.random() * 0.5 - 0.25, 5 );
             material.ambient = material.color;
 
         }
@@ -244,6 +244,10 @@ function createScene( ) {
         scene.add( meshAnim );
 
         morphs.push( meshAnim );
+
+        setTimeout(function(){
+            scene.remove(meshAnim);
+        }, 6000);
 
     }
 
@@ -266,17 +270,14 @@ function createScene( ) {
     var loader = new THREE.JSONLoader();
 
     loader.load( "models/animated/horse.js", function( geometry ) {
-
         morphColorsToFaceColors( geometry );
-
-
-        var i = -600;
-        while (i < 601){
-            addMorph( geometry, 550, 1000, 100 - Math.random() * 3000, FLOOR, i, true );
-            i += 2;
-        }
-
+        window.horse = geometry;
     } );
+
+    window.addHorse = function(){
+        var i = Math.random() * 600;
+        addMorph( horse, 550, 1000, 1000, FLOOR, i, true );
+    };
 
     /*
     loader.load( "obj/morphs/fox.js", function( geometry ) {
