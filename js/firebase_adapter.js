@@ -20,7 +20,7 @@ FirebaseAdapter = (function() {
   }
 
   FirebaseAdapter.prototype.read = function() {
-    return buffer;
+    return this.buffer;
   };
 
   return FirebaseAdapter;

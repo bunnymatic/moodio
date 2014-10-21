@@ -12,4 +12,4 @@ class FirebaseAdapter
       @buffer = snapshot.val()
 
   read: ->
-    buffer
+    @buffer
