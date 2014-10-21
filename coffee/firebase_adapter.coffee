@@ -6,11 +6,11 @@ class FirebaseAdapter
 
   constructor: (limit = 100) ->
 
-    @sensorsData = new Firebase(@fetchUrl)
-    @sensorsData.limit(limit)
+    sensorsData = new Firebase(fetchUrl)
+    sensorsData.limit(limit)
 
-    @sensorsData.on 'child_added', (snapshot, prevChildName) =>
-      @buffer = snapshot.val()
+    sensorsData.on 'child_added', (snapshot, prevChildName) =>
+      buffer = snapshot.val()
 
   read: ->
-    @buffer
+    buffer
