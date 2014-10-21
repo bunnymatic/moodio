@@ -3,8 +3,6 @@ var FirebaseAdapter;
 FirebaseAdapter = (function() {
   FirebaseAdapter.prototype.buffer = null;
 
-  FirebaseAdapter.prototype.sensorsData = null;
-
   FirebaseAdapter.prototype.fetchUrl = "https://amber-fire-6627.firebaseio.com/tessel/sensors";
 
   function FirebaseAdapter(limit) {
@@ -12,12 +10,11 @@ FirebaseAdapter = (function() {
     if (limit == null) {
       limit = 100;
     }
-    sensorsData = new Firebase(fetchUrl);
+    sensorsData = new Firebase(this.fetchUrl);
     sensorsData.limit(limit);
     sensorsData.on('child_added', (function(_this) {
       return function(snapshot, prevChildName) {
-        var buffer;
-        return buffer = snapshot.val();
+        return _this.buffer = snapshot.val();
       };
     })(this));
   }
