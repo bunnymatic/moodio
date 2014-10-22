@@ -35,7 +35,7 @@ var firebaseAdapter = new FirebaseAdapter();
 
 tweenValue = function(values, key, newValue) {
   new TWEEN.Tween({value: values[key]})
-  .to({value:newValue}, 1000)
+  .to({value:newValue}, 500)
   .easing(TWEEN.Easing.Quartic.In)
   .onUpdate(
     function() {
@@ -55,9 +55,9 @@ var generateColor = function() {
 setInterval(function() {
   if (data = firebaseAdapter.read()) {
     var soundReading       = parseFloat(data.sound);
-    // tweenValue(values, 'sound', scaleSound(soundReading));
-    console.log(soundReading);
-    values.sound = scaleSound(soundReading);
+    tweenValue(values, 'sound', scaleSound(soundReading));
+    // values.sound = scaleSound(soundReading);
+    // console.log(values.sound)
 
     var temperatureReading = parseFloat(data.temp);
     tweenValue(values, 'temperature', scaleTemperature(temperatureReading));
@@ -65,7 +65,7 @@ setInterval(function() {
     var lightReading       = parseFloat(data.light);
     tweenValue(values, 'light', scaleLight(lightReading));
   };
-}, 1000);
+}, 500);
 
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
@@ -163,11 +163,11 @@ function render() {
 
       particle.material.color = generateColor();
 
-      particle.position.y = ( Math.sin( ( ix + count ) * values.sound) * 50 ) +
-        ( Math.sin( ( iy + count ) * values.sound - 0.2) * 50 );
+      particle.position.y = ( Math.sin( ( ix + count ) * 0.5) * 50 ) +
+        ( Math.sin( ( iy + count ) * 0.3) * 50 );
 
-      particle.scale.x = particle.scale.y = ( Math.sin( ( ix + count ) * values.sound) + 1 ) * 4 +
-        ( Math.sin( ( iy + count ) * values.sound - 0.2) + 1 ) * 4;
+      particle.scale.x = particle.scale.y = ( Math.sin( ( ix + count ) * 0.5) + 1 ) * 4 +
+        ( Math.sin( ( iy + count ) * 0.3) + 1 ) * 4;
 
     }
 

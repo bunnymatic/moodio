@@ -3,7 +3,7 @@ var FirebaseAdapter;
 FirebaseAdapter = (function() {
   FirebaseAdapter.prototype.buffer = null;
 
-  FirebaseAdapter.prototype.fetchUrl = "https://amber-fire-6627.firebaseio.com/tessel/sensors";
+  FirebaseAdapter.prototype.fetchUrl = "https://amber-fire-6627.firebaseio.com/tessel/sf/sensors";
 
   function FirebaseAdapter(limit) {
     var sensorsData;
