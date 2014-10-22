@@ -19,6 +19,10 @@ var light;
 
 var clock = new THREE.Clock();
 
+var ground = null;
+var groundMaterial = null;
+var backdrop = null;
+
 init();
 animate();
 
@@ -140,10 +144,11 @@ function createScene( ) {
   // GROUND
 
   var geometry = new THREE.PlaneGeometry( 100, 100 );
-  var planeMaterial = new THREE.MeshPhongMaterial( { color: 0xffdd99 } );
+  var planeMaterial = new THREE.MeshPhongMaterial( { color: 0x00aa00 } );
+  groundMaterial = planeMaterial;
   planeMaterial.ambient = planeMaterial.color;
 
-  var ground = new THREE.Mesh( geometry, planeMaterial );
+  ground = new THREE.Mesh( geometry, planeMaterial );
 
   ground.position.set( 0, FLOOR, 0 );
   ground.rotation.x = - Math.PI / 2;
@@ -269,56 +274,6 @@ function createScene( ) {
 
   } );
 
-  /*
-    loader.load( "obj/morphs/fox.js", function( geometry ) {
-
-    morphColorsToFaceColors( geometry );
-    addMorph( geometry, 200, 1000, 100 - Math.random() * 500, FLOOR - 5, 600 );
-
-    } );
-
-    loader.load( "obj/morphs/shdw3walk.js", function( geometry ) {
-
-    morphColorsToFaceColors( geometry );
-    addMorph( geometry, 40, 2000, -500, FLOOR + 60, 245 );
-
-    } );
-
-    loader.load( "obj/morphs/flamingo.js", function( geometry ) {
-
-    morphColorsToFaceColors( geometry );
-    addMorph( geometry, 500, 1000, 500 - Math.random() * 500, FLOOR + 350, 40 );
-
-    } );
-
-    loader.load( "obj/morphs/stork.js", function( geometry ) {
-
-    morphColorsToFaceColors( geometry );
-    addMorph( geometry, 350, 1000, 500 - Math.random() * 500, FLOOR + 350, 340 );
-
-    } );
-
-    loader.load( "obj/morphs/mountainlion.js", function( geometry ) {
-
-    morphColorsToFaceColors( geometry );
-    addMorph( geometry, 400, 1000, 500 - Math.random() * 500, FLOOR - 5, 700 );
-
-    } );
-
-    loader.load( "obj/morphs/bearBrown.js", function( geometry ) {
-
-    morphColorsToFaceColors( geometry );
-    addMorph( geometry, 300, 2500, -500, FLOOR - 5, -750 );
-
-    } );
-
-    loader.load( "obj/morphs/parrot.js", function( geometry ) {
-
-    morphColorsToFaceColors( geometry );
-    addMorph( geometry, 450, 500, 500 - Math.random() * 500, FLOOR + 300, 700 );
-
-    } );
-  */
 
 }
 
@@ -332,7 +287,14 @@ function animate() {
 
 }
 
+
 var fb = new FirebaseAdapter();
+
+var scaleValue = function(val, min, max) {
+  var min = parseFloat(min)
+  return (parseFloat(val) - min)/(parseFloat(max) - min)
+}
+
 
 function render() {
 
@@ -344,7 +306,17 @@ function render() {
 
     if (sensors) {
       delta = sensors.light*sensors.sound * 45.;
+      groundMaterial.color = new THREE.Color(scaleValue(sensors.temp, 15,30), 
+                                             1.0-scaleValue(sensors.temp,12,36), 
+                                             1.0-scaleValue(sensors.temp, 15,30))
+      bgcolor = new THREE.Color(1.0 - scaleValue(sensors.humid, 10,30), 
+                                        scaleValue(sensors.temp,10,30), 
+                                        scaleValue(sensors.temp, 10,25))
+
+      scene.fog.color = bgcolor
+      renderer.setClearColor( bgcolor, 1 );
     }
+
     morph = morphs[ i ];
     morph.updateAnimation( 1000 * delta );
 
