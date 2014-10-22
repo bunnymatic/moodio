@@ -30,11 +30,11 @@ function makeScaler(minMax, desiredMinMax) {
 
 var scaleSound = makeScaler([0.01, 0.2], [0.2, 0.9]);
 var scaleTemperature = makeScaler([15, 38]);
-var scaleLight = makeScaler([0.01, 0.5], [0.1, 0.5]);
+var scaleLight = makeScaler([0.01, 0.05], [0.1, 0.5]);
 var firebaseAdapter = new FirebaseAdapter();
 
 tweenValue = function(values, key, newValue) {
-  return new TWEEN.Tween({value: values[key]})
+  new TWEEN.Tween({value: values[key]})
   .to({value:newValue}, 1000)
   .easing(TWEEN.Easing.Quartic.In)
   .onUpdate(
@@ -56,6 +56,7 @@ setInterval(function() {
   if (data = firebaseAdapter.read()) {
     var soundReading       = parseFloat(data.sound);
     // tweenValue(values, 'sound', scaleSound(soundReading));
+    console.log(soundReading);
     values.sound = scaleSound(soundReading);
 
     var temperatureReading = parseFloat(data.temp);
@@ -69,7 +70,7 @@ setInterval(function() {
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
-var colorScale = chroma.scale(['blue', 'green', 'yellow', 'orange', 'red', 'fuchsia']);
+var colorScale = chroma.scale(['lightblue', 'green', 'yellow', 'orange', 'red', 'fuchsia']);
 
 
 init();
