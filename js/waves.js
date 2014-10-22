@@ -1,4 +1,4 @@
-var SEPARATION = 75, AMOUNTX = 75, AMOUNTY = 75;
+var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
 
 var container;
 var camera, scene, renderer;
@@ -19,6 +19,11 @@ function makeScaler(minMax, desiredMinMax) {
   var desiredMax = desiredMinMax[1];
 
   return function(value) {
+    if (value < min) {
+      value = min;
+    } else if (value > max) {
+      value = max;
+    }
     return (((desiredMax - desiredMin) * (value - min)) / (max - min)) + desiredMin;
   };
 }
@@ -50,13 +55,17 @@ var generateColor = function() {
 setInterval(function() {
   if (data = firebaseAdapter.read() && false) {
     var soundReading       = parseFloat(data.sound);
-    tweenValue(values, 'sound', scaleSound(soundReading));
+    // tweenValue(values, 'sound', scaleSound(soundReading));
+    values.sound = scaleSound(soundReading);
+    // console.log("sound: ", soundReading);
 
     var temperatureReading = parseFloat(data.temp);
     tweenValue(values, 'temperature', scaleSound(temperatureReading));
+    // console.log("temperature : ", temperatureReading);
 
     var lightReading       = parseFloat(data.light);
     tweenValue(values, 'light', scaleLight(lightReading));
+    // console.log("light: ", lightReading);
   };
 }, 100);
 
