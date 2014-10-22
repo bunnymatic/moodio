@@ -20,11 +20,13 @@
               border: none;
               overflow: hidden;
               scroll: none;
+              -webkit-transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
             }
 
             #stampede2 {
               top: 0;
               left: 0;
+              z-index: 1;
             }
 
             #waves {
@@ -42,6 +44,11 @@
               right: 0;
             }
 
+            .zoomIn {
+              width: 100%;
+              height: 100%;
+            }
+
         </style>
     </head>
 
@@ -50,5 +57,44 @@
       <iframe src="/stampede.html" id="stampede" name="stampede"></iframe>
       <iframe src="/waves.html" id="waves" name="waves"></iframe>
       <iframe src="/earth.html" id="earth" name="earth"></iframe>
+
+      <script src="bower_components/jquery/dist/jquery.min.js"></script>
+      <script>
+
+        function zoomOut(name) {
+          var vizes = $('iframe');
+          vizes.removeClass('zoomIn');
+        }
+
+        function zoomIn(name) {
+          zoomOut();
+          setTimeout(function(){
+            var viz = $('#'+name);
+            var vizes = $('iframe').css('zIndex', 0);;
+            viz.addClass('zoomIn').css('zIndex', 1);
+          }, 500);
+        }
+
+        $(function(){
+          $(document).keypress(function(event){
+            switch(event.which) {
+              case 113:
+                zoomIn('stampede2');
+                break;
+              case 119:
+                zoomIn('waves');
+                break;
+              case 97:
+                zoomIn('earth');
+                break;
+              case 115:
+                zoomIn('stampede');
+                break;
+              default:
+                zoomOut();
+            }
+          });
+        });
+      </script>
     </body>
 </html>
