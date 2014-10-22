@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>three.js webgl - shadow map</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+            body {
+                font-family: Monospace;
+                background-color: #000;
+                color: #fff;
+                margin: 0px;
+                overflow: hidden;
+            }
+
+            iframe {
+              position: absolute;
+              width: 50%;
+              height: 50%;
+              border: none;
+            }
+
+            #waves {
+              top: 0;
+              right: 0;
+            }
+
+            #earth {
+              bottom: 0;
+              left: 0;
+            }
+
+            #stampede {
+              bottom: 0;
+              right: 0;
+            }
+
+        </style>
+    </head>
+
+    <body>
+      <iframe src="/stampede.html" id="stampede" name="stampede"/>
+      <iframe src="/waves.html" id="waves" name="waves"/>
+      <iframe src="/earth.html" id="earth" name="earth"/>
+    </body>
+</html>
