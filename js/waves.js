@@ -30,7 +30,7 @@ function makeScaler(minMax, desiredMinMax) {
 
 var scaleSound = makeScaler([0.01, 0.2], [0.2, 0.9]);
 var scaleTemperature = makeScaler([15, 38]);
-var scaleLight = makeScaler([0.01, 0.7], [0.1, 0.5]);
+var scaleLight = makeScaler([0.01, 0.5], [0.1, 0.5]);
 var firebaseAdapter = new FirebaseAdapter();
 
 tweenValue = function(values, key, newValue) {
