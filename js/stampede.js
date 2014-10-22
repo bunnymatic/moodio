@@ -69,8 +69,6 @@ function init() {
     light.shadowCameraFar = camera.far;
     light.shadowCameraFov = 50;
 
-    //light.shadowCameraVisible = true;
-
     light.shadowBias = 0.0001;
     light.shadowDarkness = 0.5;
 
@@ -79,7 +77,6 @@ function init() {
 
     scene.add( light );
 
-    createHUD();
     createScene();
 
     // RENDERER
@@ -91,20 +88,8 @@ function init() {
     renderer.setClearColor( scene.fog.color, 1 );
     renderer.autoClear = false;
 
-    //
-
     renderer.shadowMapEnabled = true;
     renderer.shadowMapType = THREE.PCFSoftShadowMap;
-
-    // STATS
-
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    stats.domElement.style.zIndex = 100;
-    container.appendChild( stats.domElement );
-
-    //
 
     window.addEventListener( 'resize', onWindowResize, false );
 
@@ -121,29 +106,6 @@ function onWindowResize() {
     renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
 
     controls.handleResize();
-
-}
-
-function createHUD() {
-
-    // cameraOrtho = new THREE.OrthographicCamera( SCREEN_WIDTH / - 2, SCREEN_WIDTH / 2,  SCREEN_HEIGHT / 2, SCREEN_HEIGHT / - 2, -10, 1000 );
-    // cameraOrtho.position.z = 10;
-
-    // var shader = THREE.UnpackDepthRGBAShader;
-    // var uniforms = new THREE.UniformsUtils.clone( shader.uniforms );
-
-    // hudMaterial = new THREE.ShaderMaterial( { vertexShader: shader.vertexShader, fragmentShader: shader.fragmentShader, uniforms: uniforms } );
-
-    // var hudGeo = new THREE.PlaneGeometry( SHADOW_MAP_WIDTH / 2, SHADOW_MAP_HEIGHT / 2 );
-    // var hudMesh = new THREE.Mesh( hudGeo, hudMaterial );
-    // hudMesh.position.x = ( SCREEN_WIDTH - SHADOW_MAP_WIDTH / 2 ) * -0.5;
-    // hudMesh.position.y = ( SCREEN_HEIGHT - SHADOW_MAP_HEIGHT / 2 ) * -0.5;
-    // hudMesh.rotation.x = Math.PI / 2;
-
-    // sceneHUD = new THREE.Scene();
-    // sceneHUD.add( hudMesh );
-
-    // cameraOrtho.lookAt( sceneHUD.position );
 
 }
 
@@ -165,60 +127,6 @@ function createScene( ) {
     ground.receiveShadow = true;
 
     scene.add( ground );
-
-    // TEXT
-
-    // var textGeo = new THREE.TextGeometry( "CODEO", {
-
-    //     size: 200,
-    //     height: 50,
-    //     curveSegments: 12,
-
-    //     font: "gentilis",
-    //     weight: "bold",
-    //     style: "normal",
-
-    //     bevelThickness: 0,
-    //     bevelSize: 0,
-    //     bevelEnabled: true
-
-    // });
-
-    // textGeo.computeBoundingBox();
-    // var centerOffset = -0.5 * ( textGeo.boundingBox.max.x - textGeo.boundingBox.min.x );
-
-    // var textMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x111111, ambient: 0x333333 } );
-
-    // var mesh = new THREE.Mesh( textGeo, textMaterial );
-    // mesh.position.x = centerOffset;
-    // mesh.position.y = FLOOR + 80;
-
-    // mesh.castShadow = true;
-    // mesh.receiveShadow = true;
-
-    // scene.add( mesh );
-
-    // CUBES
-
-    // var mesh2 = new THREE.Mesh( new THREE.BoxGeometry( 1500, 220, 150 ), planeMaterial );
-
-    // mesh2.position.y = FLOOR - 50;
-    // mesh2.position.z = 20;
-
-    // mesh2.castShadow = true;
-    // mesh2.receiveShadow = true;
-
-    // scene.add( mesh2 );
-
-    // var mesh3 = new THREE.Mesh( new THREE.BoxGeometry( 1600, 170, 250 ), planeMaterial );
-
-    // mesh3.position.y = FLOOR - 50;
-    // mesh3.position.z = 20;
-
-    // mesh3.castShadow = true;
-    // mesh3.receiveShadow = true;
-
-    // scene.add( mesh3 );
 
     // MORPHS
 
@@ -312,68 +220,11 @@ function createScene( ) {
         addAnimal(hslOffset);
     };
 
-    /*
-    loader.load( "obj/morphs/fox.js", function( geometry ) {
-
-        morphColorsToFaceColors( geometry );
-        addMorph( geometry, 200, 1000, 100 - Math.random() * 500, FLOOR - 5, 600 );
-
-    } );
-
-    loader.load( "obj/morphs/shdw3walk.js", function( geometry ) {
-
-        morphColorsToFaceColors( geometry );
-        addMorph( geometry, 40, 2000, -500, FLOOR + 60, 245 );
-
-    } );
-
-    loader.load( "obj/morphs/flamingo.js", function( geometry ) {
-
-        morphColorsToFaceColors( geometry );
-        addMorph( geometry, 500, 1000, 500 - Math.random() * 500, FLOOR + 350, 40 );
-
-    } );
-
-    loader.load( "obj/morphs/stork.js", function( geometry ) {
-
-        morphColorsToFaceColors( geometry );
-        addMorph( geometry, 350, 1000, 500 - Math.random() * 500, FLOOR + 350, 340 );
-
-    } );
-
-    loader.load( "obj/morphs/mountainlion.js", function( geometry ) {
-
-        morphColorsToFaceColors( geometry );
-        addMorph( geometry, 400, 1000, 500 - Math.random() * 500, FLOOR - 5, 700 );
-
-    } );
-
-    loader.load( "obj/morphs/bearBrown.js", function( geometry ) {
-
-        morphColorsToFaceColors( geometry );
-        addMorph( geometry, 300, 2500, -500, FLOOR - 5, -750 );
-
-    } );
-
-    loader.load( "obj/morphs/parrot.js", function( geometry ) {
-
-        morphColorsToFaceColors( geometry );
-        addMorph( geometry, 450, 500, 500 - Math.random() * 500, FLOOR + 300, 700 );
-
-    } );
-    */
-
 }
 
-//
-
 function animate() {
-
     requestAnimationFrame( animate );
-
     render();
-    stats.update();
-
 }
 
 function render() {
@@ -400,10 +251,5 @@ function render() {
 
     renderer.clear();
     renderer.render( scene, camera );
-
-    // Render debug HUD with shadow map
-
-    //hudMaterial.uniforms.tDiffuse.texture = light.shadowMap;
-    //renderer.render( sceneHUD, cameraOrtho );
 
 }
