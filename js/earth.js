@@ -1,4 +1,4 @@
-var container, stats;
+var container;
 var camera, scene, renderer;
 var group;
 var mouseX = 0, mouseY = 0;
@@ -90,11 +90,6 @@ function init() {
 
   container.appendChild( renderer.domElement );
 
-  stats = new Stats();
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.top = '0px';
-  container.appendChild( stats.domElement );
-
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
   //
@@ -128,7 +123,6 @@ function animate() {
   requestAnimationFrame( animate );
 
   render();
-  stats.update();
 
 }
 
