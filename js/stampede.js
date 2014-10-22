@@ -6,6 +6,10 @@ var SCREEN_WIDTH = window.innerWidth;
 var SCREEN_HEIGHT = window.innerHeight;
 var FLOOR = -250;
 
+var ANIM_SPEED = 550;
+var ANIM_DURATION = 1000;
+var ANIM_START_X = -1000;
+
 var camera, controls, scene, renderer;
 var container, stats;
 
@@ -218,24 +222,19 @@ function createScene( ) {
 
     // MORPHS
 
-    function addMorph( geometry, speed, duration, x, y, z, fudgeColor ) {
-
+    function addMorph( geometry, y, z, hslOffset ) {
         var material = new THREE.MeshLambertMaterial( { color: 0xffaa55, morphTargets: true, vertexColors: THREE.FaceColors } );
 
-        if ( fudgeColor ) {
-
-            material.color.offsetHSL( Math.random(), Math.random() * 0.5 - 0.25, 5 );
-            material.ambient = material.color;
-
-        }
+        material.color.offsetHSL( hslOffset.hue, hslOffset.sat, hslOffset.lum );
+        material.ambient = material.color;
 
         var meshAnim = new THREE.MorphAnimMesh( geometry, material );
 
-        meshAnim.speed = speed;
-        meshAnim.duration = duration;
+        meshAnim.speed = ANIM_SPEED;
+        meshAnim.duration = ANIM_DURATION;
         meshAnim.time = 600 * Math.random();
 
-        meshAnim.position.set( x, y, z );
+        meshAnim.position.set( ANIM_START_X, y, z );
         meshAnim.rotation.y = Math.PI/2;
 
         meshAnim.castShadow = true;
@@ -286,22 +285,31 @@ function createScene( ) {
         zoo.stork = geometry;
     } );
 
-    window.addHorse = function(){
-        var i = (Math.random() * 600) + 200;
-        addMorph( zoo.horse, 550, 1000, -1000, FLOOR, i, true );
+    window.addHorse = function(hslOffset){
+        addAnimal( zoo.horse, FLOOR, hslOffset );
     };
 
-    window.addFlamingo = function(){
-        addBird(zoo.flamingo);
+    window.addFlamingo = function(hslOffset){
+        addBird(zoo.flamingo, hslOffset);
     };
 
-    window.addStork = function(){
-        addBird(zoo.stork);
+    window.addStork = function(hslOffset){
+        addBird(zoo.stork, hslOffset);
     };
 
-    window.addBird = function(bird){
-        var i = (Math.random() * 600) + 200;
-        addMorph( bird, 550, 1000, -1000, FLOOR + Math.random() * 400 + 100, i, true );
+    window.addBird = function(bird, hslOffset){
+        addAnimal( bird, FLOOR + Math.random() * 400 + 100, hslOffset );
+    };
+
+    window.addAnimal = function(animal, y, hslOffset){
+        var z = (Math.random() * 800) + 200;
+        addMorph( animal, y, z, hslOffset );
+    };
+
+    animals = [addHorse, addFlamingo, addStork];
+    window.addRandomAnimal = function(hslOffset){
+        var addAnimal = animals[Math.floor(Math.random()*animals.length)];
+        addAnimal(hslOffset);
     };
 
     /*
