@@ -7,7 +7,7 @@ var particles, particle, count = 0;
 
 var values = {
   sound: 0.2,
-  temperature: 0.8,
+  temperature: 0.5,
   light: 0.2
 };
 
@@ -29,8 +29,8 @@ function makeScaler(minMax, desiredMinMax) {
 }
 
 var scaleSound = makeScaler([0.01, 0.2], [0.2, 0.9]);
-var scaleTemperature = makeScaler([15, 33]);
-var scaleLight = makeScaler([0.01, 0.7], [0, 0.5]);
+var scaleTemperature = makeScaler([15, 38]);
+var scaleLight = makeScaler([0.01, 0.7], [0.1, 0.5]);
 var firebaseAdapter = new FirebaseAdapter();
 
 tweenValue = function(values, key, newValue) {
@@ -40,6 +40,9 @@ tweenValue = function(values, key, newValue) {
   .onUpdate(
     function() {
       values[key] = this.value;
+      if (key == 'light') {
+        console.log(values[key]);
+      }
     }
   )
   .start();
@@ -53,21 +56,18 @@ var generateColor = function() {
 };
 
 setInterval(function() {
-  if (data = firebaseAdapter.read() && false) {
+  if (data = firebaseAdapter.read()) {
     var soundReading       = parseFloat(data.sound);
     // tweenValue(values, 'sound', scaleSound(soundReading));
     values.sound = scaleSound(soundReading);
-    // console.log("sound: ", soundReading);
 
     var temperatureReading = parseFloat(data.temp);
-    tweenValue(values, 'temperature', scaleSound(temperatureReading));
-    // console.log("temperature : ", temperatureReading);
+    tweenValue(values, 'temperature', scaleTemperature(temperatureReading));
 
     var lightReading       = parseFloat(data.light);
     tweenValue(values, 'light', scaleLight(lightReading));
-    // console.log("light: ", lightReading);
   };
-}, 100);
+}, 1000);
 
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
