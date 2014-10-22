@@ -21,6 +21,9 @@ StampedeController = (function() {
       return function() {
         var animal, sensors, _i, _ref, _results;
         sensors = _this.firebase.read();
+        if (sensors == null) {
+          return;
+        }
         if (logger != null) {
           logger.log(sensors);
         }

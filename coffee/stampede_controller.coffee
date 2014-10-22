@@ -7,6 +7,7 @@ class StampedeController
 
     setInterval =>
       sensors = @firebase.read()
+      return unless sensors?
       logger.log(sensors) if logger?
 
       for animal in [0...@animalCount(sensors)]
