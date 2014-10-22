@@ -40,9 +40,6 @@ tweenValue = function(values, key, newValue) {
   .onUpdate(
     function() {
       values[key] = this.value;
-      if (key == 'light') {
-        console.log(values[key]);
-      }
     }
   )
   .start();
