@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>three.js webgl - shadow map</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+            body {
+                font-family: Monospace;
+                background-color: #000;
+                color: #fff;
+                margin: 0px;
+                overflow: hidden;
+            }
+            #info {
+                position: absolute;
+                top: 10px;
+                width: 100%;
+                text-align: center;
+                z-index: 100;
+                display:block;
+            }
+            #info a { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+        </style>
+    </head>
+
+    <body>
+        <script src="https://cdn.firebase.com/js/client/1.1.2/firebase.js"></script>
+        <script src="bower_components/three.js/three.min.js"></script>
+
+        <script src="js/vendor/three-examples/controls/FirstPersonControls.js"></script>
+
+        <script src="js/vendor/three-examples/shaders/UnpackDepthRGBAShader.js"></script>
+
+        <script src="js/vendor/three-examples/Detector.js"></script>
+        <script src="js/vendor/three-examples/libs/stats.min.js"></script>
+
+        <script src="fonts/helvetiker_bold.typeface.js"></script>
+        <script src="js/firebase_adapter.js"></script>
+        <script src="js/stampede2.js"></script>
+
+    </body>
+</html>
