@@ -7,7 +7,7 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
 var earthTexture = 'land_ocean_ice_cloud_2048.jpg';
-var mikeTexture = 'mike.jpeg';
+var mikeTexture = 'mike.jpg';
 var kanyeTexture = 'kanye.jpg';
 var mcpTexture = 'master-control.jpg';
 var deathStarTexture = 'death-star.jpg';
@@ -23,10 +23,10 @@ init();
 animate();
 
 function loadTexture(filename) {
-  // console.log('load', filename, 'currentTexture', currentTexture);
 
   if (filename == currentTexture)
     return;
+  // console.log('load:', filename, ', currentTexture:', currentTexture);
 
   var loader = new THREE.TextureLoader();
   loader.load( 'textures/' + filename, function ( texture ) {
@@ -152,7 +152,7 @@ function render() {
     if (currentData.light) {
       // texture changes
       if (currentData.light > 0.03) {
-        loadTexture(sunTexture);
+        loadTexture(mikeTexture);
       } else if (currentData.light <= 0.03 && currentData.light > 0.01) {
         loadTexture(earthTexture);
       } else if (currentData.light <= 0.01) {
