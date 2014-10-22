@@ -31,7 +31,7 @@ function init() {
   // SCENE CAMERA
 
   camera = new THREE.PerspectiveCamera( 23, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR, FAR );
-  camera.position.set( 700, 50, 1900 );
+  camera.position.set( 700, 400, 1900 );
 
   controls = new THREE.FirstPersonControls( camera );
 
@@ -48,7 +48,7 @@ function init() {
   // SCENE
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog( 0x59472b, 1000, FAR );
+  scene.fog = new THREE.Fog( 0x7EE6FF, 1500, 3000 );
 
   // LIGHTS
 
@@ -262,7 +262,7 @@ function createScene( ) {
     morphColorsToFaceColors( geometry );
 
     var i = -600;
-    while (i < 601){
+    while (i < 801){
       addMorph( geometry, 550, 1000, 100 - Math.random() * 3000, FLOOR, i, true );
       i += 2;
     }
