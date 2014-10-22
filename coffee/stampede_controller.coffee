@@ -1,13 +1,17 @@
 class StampedeController
   max: {light: 0.65039062, sound: 0.19921875, temp: 28.8156, humid: 49.851}
   min: {light: 0.00976562, sound: 0.01464844, temp: 26.9387, humid: 34.3557}
+  lastChangeTime: undefined
+  lastChangeData: {light: 0.00976562, sound: 0.01464844, temp: 26.9387, humid: 34.3557}
 
   constructor: (logger) ->
     @firebase = new FirebaseAdapter()
+    @lastChangeTime = new Date
 
     setInterval =>
       sensors = @firebase.read()
       return unless sensors?
+      @checkIdle(sensors)
       logger.log(sensors) if logger?
 
       for animal in [0...@animalCount(sensors)]
@@ -35,6 +39,18 @@ class StampedeController
   percent: (value, min, max) ->
     (value - min) / (max - min) * 100
 
-  valueFromPercent: (value, min, max) ->
+  checkIdle: (sensors) ->
+    if sensors.sound != @lastChangeData.sound || sensors.light != @lastChangeData.light
+      @lastChangeTime = new Date
+      @lastChangeData = sensors
+
+    if (new Date - @lastChangeTime) > 4000
+      console.log 'generating idle animal'
+      @lastChangeTime = new Date
+      addRandomAnimal @hslOffset(sensors)
+
+
+
+
 
 new StampedeController()

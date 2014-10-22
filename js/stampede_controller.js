@@ -15,8 +15,18 @@ StampedeController = (function() {
     humid: 34.3557
   };
 
+  StampedeController.prototype.lastChangeTime = void 0;
+
+  StampedeController.prototype.lastChangeData = {
+    light: 0.00976562,
+    sound: 0.01464844,
+    temp: 26.9387,
+    humid: 34.3557
+  };
+
   function StampedeController(logger) {
     this.firebase = new FirebaseAdapter();
+    this.lastChangeTime = new Date;
     setInterval((function(_this) {
       return function() {
         var animal, sensors, _i, _ref, _results;
@@ -24,6 +34,7 @@ StampedeController = (function() {
         if (sensors == null) {
           return;
         }
+        _this.checkIdle(sensors);
         if (logger != null) {
           logger.log(sensors);
         }
@@ -62,7 +73,17 @@ StampedeController = (function() {
     return (value - min) / (max - min) * 100;
   };
 
-  StampedeController.prototype.valueFromPercent = function(value, min, max) {};
+  StampedeController.prototype.checkIdle = function(sensors) {
+    if (sensors.sound !== this.lastChangeData.sound || sensors.light !== this.lastChangeData.light) {
+      this.lastChangeTime = new Date;
+      this.lastChangeData = sensors;
+    }
+    if ((new Date - this.lastChangeTime) > 4000) {
+      console.log('generating idle animal');
+      this.lastChangeTime = new Date;
+      return addRandomAnimal(this.hslOffset(sensors));
+    }
+  };
 
   return StampedeController;
 
