@@ -23,7 +23,7 @@ init();
 animate();
 
 function loadTexture(filename) {
-  console.log('load', filename, 'currentTexture', currentTexture);
+  // console.log('load', filename, 'currentTexture', currentTexture);
 
   if (filename == currentTexture)
     return;
@@ -133,34 +133,35 @@ function render() {
   camera.lookAt( scene.position );
 
   var currentData = firebase.read();
-  var rotationValue = 0.8;
+  var rotationAmount = 0.05;
 
   if (currentData != null) {
     // console.log(currentData)
 
     if (currentData.sound) {
-      rotationValue *= currentData.sound;
+      // sound drives rotation speed
+      rotationAmount = currentData.sound * currentData.sound * 200;
+      // console.log('rotationAmount', rotationAmount);
 
-      if (currentData.sound > 0.02) {
-        camera.position.z = 500;
-      } else {
-        camera.position.z = 600;
-      }
+      // sound drives globe size
+      cameraZoom = 500 + 2/currentData.sound - 100;
+      camera.position.z = cameraZoom;
+      // console.log('zoom:', cameraZoom);
     }
 
-    if (currentData.light < 0.015) {
-      if (currentMesh != moonTexture)
+    if (currentData.light) {
+      // texture changes
+      if (currentData.light > 0.03) {
+        loadTexture(sunTexture);
+      } else if (currentData.light <= 0.03 && currentData.light > 0.01) {
+        loadTexture(earthTexture);
+      } else if (currentData.light <= 0.01) {
         loadTexture(moonTexture);
-    }
-
-    if (currentData.temp > 33) {
-      loadTexture(sunTexture)
+      }
     }
   }
 
-  // console.log(rotationValue)
-
-  group.rotation.y -= rotationValue;
+  group.rotation.y -= rotationAmount;
 
   renderer.render( scene, camera );
 
