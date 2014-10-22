@@ -7,7 +7,7 @@ var SCREEN_HEIGHT = window.innerHeight;
 var FLOOR = -250;
 
 var camera, controls, scene, renderer;
-var container, stats;
+var container;
 
 var NEAR = 5, FAR = 3000;
 
@@ -91,14 +91,6 @@ function init() {
 
   renderer.shadowMapEnabled = true;
   renderer.shadowMapType = THREE.PCFSoftShadowMap;
-
-  // STATS
-
-  stats = new Stats();
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.top = '0px';
-  stats.domElement.style.zIndex = 100;
-  container.appendChild( stats.domElement );
 
   //
 
@@ -337,7 +329,6 @@ function animate() {
   requestAnimationFrame( animate );
 
   render();
-  stats.update();
 
 }
 
@@ -350,7 +341,7 @@ function render() {
   for ( var i = 0; i < morphs.length; i ++ ) {
 
     sensors = fb.read()
-    
+
     if (sensors) {
       delta = sensors.light*sensors.sound * 45.;
     }
